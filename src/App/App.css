@@ -1,0 +1,60 @@
+.all-boxes {
+    display: grid;
+    grid-template-columns: 423px 1fr;
+    grid-template-rows: 220px;
+    grid-template-areas:
+    'one three'
+    'two three';
+}
+
+/* Box-1 */
+
+.box-1 {
+    grid-area: one;
+    background-color: #1E1E1E;
+    margin: 20px 10px 10px 20px;
+    border-radius: 10px;
+    padding: 20px 25px;
+}
+
+.top-logo {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.top-logo h1 {
+    color: #7F00FF;
+    font-size: 37px;
+    font-weight: 800;
+}
+
+.top-logo p {
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.title {
+    font-size: 25px;
+    font-weight: 800;
+}
+
+/* Box-2 */
+
+.box-2 {
+    grid-area: two;
+    background-color: #1E1E1E;
+    margin: 10px 10px 20px 20px;
+    border-radius: 10px;
+}
+
+/* Box-3 */
+
+.box-3 {
+    grid-area: three;
+    background-color: #1E1E1E;
+    height: calc(100vh - 2 * 20px);
+    margin: 20px 20px 20px 10px;
+    border-radius: 10px;
+}
