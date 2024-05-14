@@ -1,7 +1,7 @@
 .all-boxes {
     display: grid;
     grid-template-columns: 423px 1fr;
-    grid-template-rows: 220px;
+    grid-template-rows: 220px 1fr;
     grid-template-areas:
     'one three'
     'two three';
@@ -47,6 +47,7 @@
     background-color: #1E1E1E;
     margin: 10px 10px 20px 20px;
     border-radius: 10px;
+    padding: 20px 25px;
 }
 
 /* Box-3 */
@@ -54,7 +55,8 @@
 .box-3 {
     grid-area: three;
     background-color: #1E1E1E;
-    height: calc(100vh - 2 * 20px);
+    height: calc(100vh - 2 * 41px);
     margin: 20px 20px 20px 10px;
     border-radius: 10px;
+    padding: 20px 25px;
 }

@@ -25,7 +25,6 @@ const Spotify = {
   },
 
   handleLogout: (setToken) => {
-    // Clear token from state and local storage
     setToken("");
     window.localStorage.removeItem("token");
   },
@@ -79,7 +78,6 @@ const Spotify = {
           }
         }
       );
-      console.log(response.data.id)
       try {
         const tracks = await axios.post(
           `https://api.spotify.com/v1/playlists/${response.data.id}/tracks`,
