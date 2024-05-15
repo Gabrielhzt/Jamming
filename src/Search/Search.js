@@ -4,16 +4,19 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass, faPlus } from '@fortawesome/free-solid-svg-icons';
 import Spotify from "../API/Spotify";
 
-const Search = (token) => {
+const Search = ({ token }) => {
     const [searchKey, setSearchKey] = useState('');
     const [result, setResult] = useState([]);
 
-    const searchTracks = async () => {
-        try {
-            const trackData = await Spotify.getTracks(token, searchKey);
-            setResult(trackData);
-        } catch (error) {
-            console.error('Error searching tracks:', error);
+    const handleSearch = async () => {
+        if(searchKey.length !== 0) {
+            try {
+                const response = await Spotify.getTracks(token, searchKey)
+                console.log(response)
+                setResult(response.tracks.items);
+            } catch (error) {
+                console.error('Error searching tracks:', error);
+            }
         }
     };
 
@@ -27,11 +30,11 @@ const Search = (token) => {
                     value={searchKey}
                     onChange={(e) => setSearchKey(e.target.value)}
                 />
-                <button className="input-btn" onClick={searchTracks}><FontAwesomeIcon icon={faMagnifyingGlass} size="xl" /></button>
+                <button className="input-btn" onClick={handleSearch}><FontAwesomeIcon icon={faMagnifyingGlass} size="xl" /></button>
             </div>
-            {result && result.tracks && result.tracks.items.length > 0 && (
+            {result.length > 0 && (
                 <div className="result">
-                    {result.tracks.items.map((track) => (
+                    {result.map((track) => (
                         <div key={track.id} className="song">
                             <div className="song-info">
                                 <img src={track.album.images[0].url} alt={track.name} className="img" />
