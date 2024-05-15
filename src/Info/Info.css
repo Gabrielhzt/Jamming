@@ -118,3 +118,27 @@
     padding: 6px 6px 5px;
     cursor: pointer;
 }
+
+/*PUT*/
+
+.playlist-title {
+    font-size: 45px;
+    font-weight: 800;
+    max-width: 300px;
+    color: #fff;
+    background-color: transparent;
+    border: 2px solid #fff;
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+
+.playlist-description {
+    font-size: 14px;
+    max-width: 500px;
+    color: #fff;
+    background-color: transparent;
+    border: 2px solid #fff;
+    border-radius: 5px;
+    padding: 5px 10px;
+    resize: none;
+}

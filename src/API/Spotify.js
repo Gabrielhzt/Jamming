@@ -63,13 +63,13 @@ const Spotify = {
     }
   },
 
-  importAlbum: async (token, user_id) => {
+  importAlbum: async (token, user_id, name, description) => {
     try {
       const response = await axios.post(
         `https://api.spotify.com/v1/users/${user_id}/playlists`,
         {
-          name: "hello",
-          description: "nono"
+          name: name,
+          description: description
         },
         {
           headers: {
