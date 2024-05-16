@@ -63,7 +63,22 @@ const Spotify = {
     }
   },
 
-  importAlbum: async (token, user_id, name, description) => {
+  getTracksById: async (token,id) => {
+    try {
+      const { data } = await axios.get(`https://api.spotify.com/v1/tracks/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      
+      return data;
+    } catch (error) {
+        console.error("Error getting tracks by their id:", error);
+        throw error;
+    }
+  },
+
+  importAlbum: async (token, user_id, name, description, uris) => {
     try {
       const response = await axios.post(
         `https://api.spotify.com/v1/users/${user_id}/playlists`,
@@ -82,10 +97,7 @@ const Spotify = {
         const tracks = await axios.post(
           `https://api.spotify.com/v1/playlists/${response.data.id}/tracks`,
           {
-            uris: [
-              'spotify:track:4RJ4yw4211nR1ggAved18G',
-              'spotify:track:4Hj36H5c7liPVqpDrGxTgJ'
-            ]
+            uris: uris
           },
           {
             headers: {

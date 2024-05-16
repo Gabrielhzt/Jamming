@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass, faPlus } from '@fortawesome/free-solid-svg-icons';
 import Spotify from "../API/Spotify";
 
-const Search = ({ token }) => {
+const Search = ({ token, setToken, setUris, setId }) => {
     const [searchKey, setSearchKey] = useState('');
     const [result, setResult] = useState([]);
 
@@ -12,13 +12,18 @@ const Search = ({ token }) => {
         if(searchKey.length !== 0) {
             try {
                 const response = await Spotify.getTracks(token, searchKey)
-                console.log(response)
                 setResult(response.tracks.items);
             } catch (error) {
+                setToken('')
                 console.error('Error searching tracks:', error);
             }
         }
     };
+
+    const handleAdd = (uri, id) => {
+        setUris(prevUris => [...prevUris, uri]);
+        setId(id);
+    }
 
     return (
         <div className="search-box">
@@ -43,7 +48,7 @@ const Search = ({ token }) => {
                                     <p>{track.artists[0].name}</p>
                                 </div>
                             </div>
-                            <button className="add"><FontAwesomeIcon icon={faPlus} size="lg" /></button>
+                            <button className="add" onClick={() => handleAdd(track.uri, track.id)} ><FontAwesomeIcon icon={faPlus} size="lg" /></button>
                         </div>
                     ))}
                 </div>

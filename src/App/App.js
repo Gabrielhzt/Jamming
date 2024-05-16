@@ -5,6 +5,8 @@ import Info from '../Info/Info';
 
 const App = () => {
   const [token, setToken] = useState(() => window.localStorage.getItem('token') || '');
+  const [uris, setUris] = useState([]);
+  const [takeid, setTakeId] = useState([]);
 
   useEffect(() => {
     if (!token && window.location.hash) {
@@ -32,10 +34,10 @@ const App = () => {
         <h2 className='title'>Let's find something for your playlist</h2>
       </div>
       <div className='box-2'>
-        <Search token={token} />
+        <Search token={token} setToken={setToken} setUris={setUris} setId={setTakeId} />
       </div>
       <div className='box-3'>
-        <Info token={token} setToken={setToken} />
+        <Info token={token} setToken={setToken} takeId={takeid} setTakeId={setTakeId} />
       </div>
     </div>
   )

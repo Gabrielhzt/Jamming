@@ -1,19 +1,36 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import './Info.css';
 import Spotify from "../API/Spotify";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinus, faMusic, faUser } from '@fortawesome/free-solid-svg-icons';
 
-const Info = ({ token, setToken }) => {
+const Info = ({ token, setToken, takeId, setTakeId }) => {
     const [put, setPut] = useState(false)
     const [title, setTitle] = useState('My playlist')
     const [description, setDescription] = useState('Descripe the mood of your playlist')
-    const [newTitle, setNewTitle] = useState('')
+    const [newTitle, setNewTitle] = useState('My Playlist')
     const [newDescription, setNewDescription] = useState('Descripe the mood of your playlist')
+    const [fetchedTracks, setFetchedTracks] = useState([]);
 
-    const handleLogout = () => {
-        Spotify.handleLogout(setToken);
-    };
+    useEffect(() => {
+        if (takeId.length !== 0) {
+            const fetchTracks = async () => {
+                try {
+                    const allIds = fetchedTracks.map((e) => e.id)
+                    if (allIds.includes(takeId)) {
+                        return;
+                    }
+                    const response = await Spotify.getTracksById(token, takeId);
+                    setFetchedTracks(prev => [...prev, response]);
+                    setTakeId([])
+                } catch (error) {
+                    console.error('Error fetching track:', error);
+                }
+            };
+        
+            fetchTracks();
+        }
+    }, [takeId]);
 
     const handleChange = () => {
         setTitle(newTitle)
@@ -50,12 +67,11 @@ const Info = ({ token, setToken }) => {
                         <textarea 
                             rows="2" 
                             cols="50" 
-                            maxlength="150" 
+                            maxLength="150" 
+                            value={description}
                             className="playlist-description"
                             onChange={e => setNewDescription(e.target.value)}
-                        >
-                            {description}
-                        </textarea>
+                        ></textarea>
                         <div className="playlist-btn">
                         <button className="add-to" onClick={() => { setPut(false); handleChange(); }}>
                             Validate the changes
@@ -74,17 +90,19 @@ const Info = ({ token, setToken }) => {
                 )}
             </div>
             <div className="playlist-song">
-                <div className="song">
-                    <div className="song-info">
-                        <div className="img"></div>
-                        <div className="text-song">
-                            <h3>Full stack engineer</h3>
-                            <p>Gabrielhzt</p>
+                {fetchedTracks.map((track) => (
+                    <div className="song" key={track.id}>
+                        <div className="song-info">
+                            <img src={track.album.images[0].url} className="img" />
+                            <div className="text-song">
+                                <h3>{track.name}</h3>
+                                <p>{track.album.artists[0].name}</p>
+                            </div>
                         </div>
+                        <p>{track.album.name}</p>
+                        <button className="remove"><FontAwesomeIcon icon={faMinus} size="xl" /></button>
                     </div>
-                    <p>Self-learner</p>
-                    <button className="remove"><FontAwesomeIcon icon={faMinus} size="xl" /></button>
-                </div>
+                ))}
             </div>
         </div>
     )
