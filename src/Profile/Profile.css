@@ -1,0 +1,63 @@
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.profile-info h1 {
+    font-size: 40px;
+}
+
+.profile-info p {
+    background-color: #fff;
+    color: #000;
+    padding: 3px 11px;
+    border-radius: 20px;
+    font-size: 13px;
+    margin-left: 10px;
+}
+
+.all-playlist {
+    margin-top: 50px;
+}
+
+.all-playlist h2 {
+    font-size: 27px;
+    margin-bottom: 30px;
+}
+
+.align {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+}
+
+.flex {
+    display: flex;
+    gap: 15px;
+    width: 280px;
+}
+
+.little-img {
+    width: 130px;
+    border-radius: 10px;
+}
+
+.text-playlist {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.text-playlist h3 {
+    font-size: 23px;
+}
+
+.little-btn {
+    background-color: #fff;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 13px;
+    cursor: pointer;
+}

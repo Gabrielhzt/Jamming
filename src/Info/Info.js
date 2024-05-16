@@ -6,8 +6,8 @@ import { faMusic, faUser } from '@fortawesome/free-solid-svg-icons';
 import Playlist from "../Playlist/Playlist";
 import Profile from "../Profile/Profile";
 
-const Info = ({ token, setToken, takeId, setTakeId, uris, setUris, userId }) => {
-    const [playlist, setPlaylist] = useState(false)
+const Info = ({ token, setToken, takeId, setTakeId, uris, setUris, userId, setUserId }) => {
+    const [playlist, setPlaylist] = useState(true)
 
     return (
         <div className="all-info">
@@ -29,7 +29,7 @@ const Info = ({ token, setToken, takeId, setTakeId, uris, setUris, userId }) => 
             {playlist ? (
                 <Playlist token={token} setToken={setToken} takeId={takeId} setTakeId={setTakeId} uris={uris} setUris={setUris} userId={userId} />
             ):(
-                <Profile />
+                <Profile token={token} setToken={setToken} setPlaylist={setPlaylist} userId={userId} />
             )}
         </div>
     )

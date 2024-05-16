@@ -8,7 +8,7 @@ const App = () => {
   const [token, setToken] = useState(() => window.localStorage.getItem('token') || '');
   const [uris, setUris] = useState([]);
   const [takeid, setTakeId] = useState([]);
-  const [userId, setUserId] = useState()
+  const [userId, setUserId] = useState();
 
   useEffect(() => {
     if (!token && window.location.hash) {
@@ -28,16 +28,21 @@ const App = () => {
 
   useEffect(() => {
     const fetchProfile = async () => {
-        try {
+        if(token) {
+          try {
             const profile = await Spotify.getProfile(token);
             setUserId(profile.id)
-        } catch (error) {
-            console.error('Error getting profile:', error);
+          } catch (error) {
+              console.error('Error getting profile:', error);
+              Spotify.handleLogout(setToken)
+          }
+        }else {
+          return
         }
     };
 
     fetchProfile();
-  }, []);
+  }, [token]);
 
   return (
     <div className='all-boxes'>
@@ -52,7 +57,7 @@ const App = () => {
         <Search token={token} setToken={setToken} setUris={setUris} setId={setTakeId} />
       </div>
       <div className='box-3'>
-        <Info token={token} setToken={setToken} takeId={takeid} setTakeId={setTakeId} uris={uris} setUris={setUris} userId={userId} />
+        <Info token={token} setToken={setToken} takeId={takeid} setTakeId={setTakeId} uris={uris} setUris={setUris} userId={userId} setUserId={setUserId} />
       </div>
     </div>
   )
