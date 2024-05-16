@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 import Search from '../Search/Search';
 import Info from '../Info/Info';
+import Spotify from '../API/Spotify';
 
 const App = () => {
   const [token, setToken] = useState(() => window.localStorage.getItem('token') || '');
   const [uris, setUris] = useState([]);
   const [takeid, setTakeId] = useState([]);
+  const [userId, setUserId] = useState()
 
   useEffect(() => {
     if (!token && window.location.hash) {
@@ -24,6 +26,19 @@ const App = () => {
     }
   }, [token]);
 
+  useEffect(() => {
+    const fetchProfile = async () => {
+        try {
+            const profile = await Spotify.getProfile(token);
+            setUserId(profile.id)
+        } catch (error) {
+            console.error('Error getting profile:', error);
+        }
+    };
+
+    fetchProfile();
+  }, []);
+
   return (
     <div className='all-boxes'>
       <div className='box-1'>
@@ -37,7 +52,7 @@ const App = () => {
         <Search token={token} setToken={setToken} setUris={setUris} setId={setTakeId} />
       </div>
       <div className='box-3'>
-        <Info token={token} setToken={setToken} takeId={takeid} setTakeId={setTakeId} />
+        <Info token={token} setToken={setToken} takeId={takeid} setTakeId={setTakeId} uris={uris} setUris={setUris} userId={userId} />
       </div>
     </div>
   )

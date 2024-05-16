@@ -4,12 +4,12 @@ import Spotify from "../API/Spotify";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinus, faMusic, faUser } from '@fortawesome/free-solid-svg-icons';
 
-const Info = ({ token, setToken, takeId, setTakeId }) => {
+const Info = ({ token, setToken, takeId, setTakeId, uris, setUris, userId }) => {
     const [put, setPut] = useState(false)
     const [title, setTitle] = useState('My playlist')
-    const [description, setDescription] = useState('Descripe the mood of your playlist')
+    const [description, setDescription] = useState('Descripe the mood of your playlist.')
     const [newTitle, setNewTitle] = useState('My Playlist')
-    const [newDescription, setNewDescription] = useState('Descripe the mood of your playlist')
+    const [newDescription, setNewDescription] = useState('Descripe the mood of your playlist.')
     const [fetchedTracks, setFetchedTracks] = useState([]);
 
     useEffect(() => {
@@ -37,11 +37,26 @@ const Info = ({ token, setToken, takeId, setTakeId }) => {
         setDescription(newDescription)
     }
 
-    const removeTrack = (id) => {
+    const removeTrack = (id, uri) => {
         const updatedTracks = fetchedTracks.filter(track => track.id !== id);
+        const updatedTracksUris = uris.filter(trackUri => trackUri !== uri);
         setFetchedTracks(updatedTracks);
-        console.log(fetchedTracks)
+        setUris(updatedTracksUris);
     };
+
+
+    const importToSpotify = async () => {
+        if(uris.length > 0) {
+            Spotify.importAlbum(token, userId, title, description, uris)
+            setTitle('My Playlist')
+            setDescription('Descripe the mood of your playlist.')
+            setUris([])
+            setTakeId([])
+            setFetchedTracks([])
+        }else {
+            console.log('Add Tracks to your playlist')
+        }
+    }
 
     return (
         <div className="all-info">
@@ -74,7 +89,7 @@ const Info = ({ token, setToken, takeId, setTakeId }) => {
                             rows="2" 
                             cols="50" 
                             maxLength="150" 
-                            value={description}
+                            value={newDescription}
                             className="playlist-description"
                             onChange={e => setNewDescription(e.target.value)}
                         ></textarea>
@@ -89,7 +104,7 @@ const Info = ({ token, setToken, takeId, setTakeId }) => {
                         <h1>{title}</h1>
                         <p>{description}</p>
                         <div className="playlist-btn">
-                            <button className="add-to">Add to spotify</button>
+                            <button className="add-to" onClick={importToSpotify}>Add to spotify</button>
                             <button className="put" onClick={() => setPut(true)}>Modify the playlist</button>
                         </div>
                     </div>
@@ -106,7 +121,7 @@ const Info = ({ token, setToken, takeId, setTakeId }) => {
                             </div>
                         </div>
                         <p>{track.album.name}</p>
-                        <button className="remove" onClick={() => removeTrack(track.id)}><FontAwesomeIcon icon={faMinus} size="xl" /></button>
+                        <button className="remove" onClick={() => removeTrack(track.id, track.uri)}><FontAwesomeIcon icon={faMinus} size="xl" /></button>
                     </div>
                 ))}
             </div>
