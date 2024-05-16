@@ -37,6 +37,12 @@ const Info = ({ token, setToken, takeId, setTakeId }) => {
         setDescription(newDescription)
     }
 
+    const removeTrack = (id) => {
+        const updatedTracks = fetchedTracks.filter(track => track.id !== id);
+        setFetchedTracks(updatedTracks);
+        console.log(fetchedTracks)
+    };
+
     return (
         <div className="all-info">
             <div className="head">
@@ -100,7 +106,7 @@ const Info = ({ token, setToken, takeId, setTakeId }) => {
                             </div>
                         </div>
                         <p>{track.album.name}</p>
-                        <button className="remove"><FontAwesomeIcon icon={faMinus} size="xl" /></button>
+                        <button className="remove" onClick={() => removeTrack(track.id)}><FontAwesomeIcon icon={faMinus} size="xl" /></button>
                     </div>
                 ))}
             </div>
