@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import './Playlist.css';
 import Spotify from "../API/Spotify";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,6 +10,7 @@ const Playlist = ({ token, takeId, setTakeId, uris, setUris, userId, fetchedTrac
     const [description, setDescription] = useState('Descripe the mood of your playlist.')
     const [newTitle, setNewTitle] = useState('My Playlist')
     const [newDescription, setNewDescription] = useState('Descripe the mood of your playlist.')
+    const [message, setMessage] = useState('There is nothing in your playlist for now')
     
 
     const handleChange = () => {
@@ -33,8 +34,9 @@ const Playlist = ({ token, takeId, setTakeId, uris, setUris, userId, fetchedTrac
             setUris([])
             setTakeId([])
             setFetchedTracks([])
+            setMessage('Your playlist has been successfully added to your Spotify account.')
         }else {
-            console.log('Add Tracks to your playlist')
+            setMessage('You have to add tracks to your playlist.')
         }
     }
 
@@ -83,22 +85,36 @@ const Playlist = ({ token, takeId, setTakeId, uris, setUris, userId, fetchedTrac
                 )}
             </div>
             <div className="playlist-song">
-                {fetchedTracks && fetchedTracks.map((track) => (
-                    <div className="song" key={track.id}>
-                        <div className="song-info">
-                            <img src={track.album.images[0].url} className="img" />
-                            <div className="text-song">
-                                <h3>
-                                    {track.name.slice(0, 16)}
-                                    {track.name.length >= 15 ? '...' : ''}
-                                </h3>
-                                <p>{track.album.artists[0].name}</p>
+                {fetchedTracks && token ? (
+                    fetchedTracks.length > 0 ? (
+                        fetchedTracks.map((track) => (
+                            <div className="song" key={track.id}>
+                                <div className="song-info">
+                                    <img src={track.album.images[0].url} alt="album" className="img" />
+                                    <div className="text-song">
+                                        <h3>
+                                            {track.name.slice(0, 16)}
+                                            {track.name.length >= 15 ? '...' : ''}
+                                        </h3>
+                                        <p>{track.album.artists[0].name}</p>
+                                    </div>
+                                </div>
+                                <p className="album-name">{track.album.name}</p>
+                                <button className="remove" onClick={() => removeTrack(track.id, track.uri)}>
+                                    <FontAwesomeIcon icon={faMinus} size="xl" />
+                                </button>
                             </div>
+                        ))
+                    ) : (
+                        <div className="center">
+                            {message}
                         </div>
-                        <p className="album-name">{track.album.name}</p>
-                        <button className="remove" onClick={() => removeTrack(track.id, track.uri)}><FontAwesomeIcon icon={faMinus} size="xl" /></button>
+                    )
+                ) : (
+                    <div className="center">
+                        {message}
                     </div>
-                ))}
+                )}
             </div>
         </div>
     )

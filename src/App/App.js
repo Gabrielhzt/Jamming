@@ -53,7 +53,6 @@ const App = () => {
     if (takeid.length !== 0) {
         const fetchTracks = async () => {
             try {
-                console.log('ho')
                 const allIds = fetchedTracks.map((e) => e.id)
                 if (allIds.includes(takeid)) {
                     return;
@@ -68,11 +67,7 @@ const App = () => {
     
         fetchTracks();
     }
-}, [takeid]);
-
-  useEffect(() => {
-    console.log(takeid)
-  }, [takeid])
+}, [takeid, fetchedTracks, token]);
 
   return (
     <div className='all-boxes'>
@@ -87,7 +82,7 @@ const App = () => {
         <Search token={token} setToken={setToken} setUris={setUris} setId={setTakeId} />
       </div>
       <div className='box-3'>
-        <Info token={token} setToken={setToken} takeId={takeid} setTakeId={setTakeId} uris={uris} setUris={setUris} userId={userId} setUserId={setUserId} fetchedTracks={fetchedTracks} setFetchedTracks={setFetchedTracks} playlist={playlist} setPlaylist={setPlaylist} />
+        <Info token={token} setToken={setToken} takeId={takeid} setTakeId={setTakeId} uris={uris} setUris={setUris} userId={userId} setUserId={setUserId} fetchedTracks={fetchedTracks} setFetchedTracks={setFetchedTracks} playlist={playlist} setPlaylist={setPlaylist} setPage={setPage} />
       </div>
       <div className={page === 'Playlist' ? 'box-4-active' : 'box-4'} onClick={() => setPage('Playlist')}>
         <p>Playlist</p>
@@ -98,15 +93,21 @@ const App = () => {
       <div className={page === 'Profile' ? 'box-6-active' : 'box-6'} onClick={() => setPage('Profile')}>
         <p>Profile</p>
       </div>
-      <div className='box-7'>
-        {page === 'Playlist' ? (
-          <Playlist token={token} setToken={setToken} takeId={takeid} setTakeId={setTakeId} uris={uris} setUris={setUris} userId={userId} fetchedTracks={fetchedTracks} setFetchedTracks={setFetchedTracks} />
-        ) : page === 'Search' ? (
-          <Search token={token} setToken={setToken} setUris={setUris} setId={setTakeId} />
-        ) : page === 'Profile' ? (
-          <Profile token={token} setToken={setToken} userId={userId} playlist={playlist} setPlaylist={setPlaylist} setPage={setPage} />
-        ) : null}
-      </div>
+      {token ? (
+        <div className='box-7'>
+          {page === 'Playlist' ? (
+            <Playlist token={token} setToken={setToken} takeId={takeid} setTakeId={setTakeId} uris={uris} setUris={setUris} userId={userId} fetchedTracks={fetchedTracks} setFetchedTracks={setFetchedTracks} />
+          ) : page === 'Search' ? (
+            <Search token={token} setToken={setToken} setUris={setUris} setId={setTakeId} />
+          ) : page === 'Profile' ? (
+            <Profile token={token} setToken={setToken} userId={userId} playlist={playlist} setPlaylist={setPlaylist} setPage={setPage} />
+          ) : null}
+        </div>
+      ):(
+        <div className='box-8'>
+          <a href={Spotify.link()} className="login">Login to Spotify</a>
+        </div>
+      )}
     </div>
   )
 }

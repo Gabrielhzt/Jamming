@@ -9,7 +9,7 @@ const Search = ({ token, setToken, setUris, setId }) => {
     const [result, setResult] = useState([]);
 
     const handleSearch = async () => {
-        if(searchKey.length !== 0) {
+        if(token && searchKey.length !== 0) {
             try {
                 const response = await Spotify.getTracks(token, searchKey)
                 setResult(response.tracks.items);
@@ -37,23 +37,35 @@ const Search = ({ token, setToken, setUris, setId }) => {
                 />
                 <button className="input-btn" onClick={handleSearch}><FontAwesomeIcon icon={faMagnifyingGlass} size="xl" /></button>
             </div>
-            {result.length > 0 && (
+            {token ? (
                 <div className="result">
-                    {result.map((track) => (
-                        <div key={track.id} className="song">
-                            <div className="song-info">
-                                <img src={track.album.images[0].url} alt={track.name} className="img" />
-                                <div className="text-song">
-                                <h3>
-                                    {track.name.slice(0, 16)}
-                                    {track.name.length >= 15 ? '...' : ''}
-                                </h3>
-                                    <p>{track.artists[0].name}</p>
+                {result.length > 0 ? (
+                    <div className="result">
+                        {result.map((track) => (
+                            <div key={track.id} className="song">
+                                <div className="song-info">
+                                    <img src={track.album.images[0].url} alt={track.name} className="img" />
+                                    <div className="text-song">
+                                    <h3>
+                                        {track.name.slice(0, 16)}
+                                        {track.name.length >= 15 ? '...' : ''}
+                                    </h3>
+                                        <p>{track.artists[0].name}</p>
+                                    </div>
                                 </div>
+                                <button className="add" onClick={() => handleAdd(track.uri, track.id)} ><FontAwesomeIcon icon={faPlus} size="lg" /></button>
                             </div>
-                            <button className="add" onClick={() => handleAdd(track.uri, track.id)} ><FontAwesomeIcon icon={faPlus} size="lg" /></button>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
+                ):(
+                    <div className="center">
+                        <p>Nothing here for now</p>
+                    </div>
+                )}
+            </div>
+            ):(
+                <div className="center">
+                    <p>You have to Login to spotify</p>
                 </div>
             )}
         </div>

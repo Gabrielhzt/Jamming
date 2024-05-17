@@ -7,29 +7,31 @@ const Profile = ({ token, setToken, setPlaylist, userId, setPage }) => {
     const [userPlaylist, setUserPlaylist] = useState([]);
 
     useEffect(() => {
-        const fetchProfile = async () => {
-            try {
-                const profile = await Spotify.getProfile(token);
-                setUserProfile(profile)
-            } catch (error) {
-                console.error('Error getting profile:', error);
-                
-            }
-        };
-
-        const fetchUserPlaylists = async () => {
-            try {
-                const response = await Spotify.getUserPlaylists(token, userId);
-                setUserPlaylist(response.items)
-            } catch (error) {
-                console.error('Error fetching user Playlists:', error)
-            }
-        }
-        
+        if(token) {
+            const fetchProfile = async () => {
+                try {
+                    const profile = await Spotify.getProfile(token);
+                    setUserProfile(profile)
+                } catch (error) {
+                    console.error('Error getting profile:', error);
+                    
+                }
+            };
     
-        fetchUserPlaylists()
-        fetchProfile();
-      }, []);
+            const fetchUserPlaylists = async () => {
+                try {
+                    const response = await Spotify.getUserPlaylists(token, userId);
+                    setUserPlaylist(response.items)
+                } catch (error) {
+                    console.error('Error fetching user Playlists:', error)
+                }
+            }
+            
+        
+            fetchUserPlaylists()
+            fetchProfile();
+        }
+      }, [token, userId]);
 
     const handleLogout = () => {
         Spotify.handleLogout(setToken);
@@ -47,7 +49,7 @@ const Profile = ({ token, setToken, setPlaylist, userId, setPage }) => {
                             <p>{userProfile.followers.total} followers</p>
                         </div>
                         <div className="playlist-btn">
-                            <a href={userProfile.external_urls.spotify} target="_blank"><button className="add-to">Go to my Spotify Profile</button></a>
+                            <a href={userProfile.external_urls.spotify} target="_blank" rel="noreferrer"><button className="add-to">Go to my Spotify Profile</button></a>
                             <button className="put" onClick={handleLogout}>Log out</button>
                         </div>
                     </div>
