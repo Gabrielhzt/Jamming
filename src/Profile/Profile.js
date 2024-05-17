@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import './Profile.css';
 import Spotify from "../API/Spotify";
 
-const Profile = ({ token, setToken, setPlaylist, userId }) => {
+const Profile = ({ token, setToken, setPlaylist, userId, setPage }) => {
     const [userProfile, setUserProfile] = useState(null);
     const [userPlaylist, setUserPlaylist] = useState([]);
 
@@ -20,8 +20,6 @@ const Profile = ({ token, setToken, setPlaylist, userId }) => {
         const fetchUserPlaylists = async () => {
             try {
                 const response = await Spotify.getUserPlaylists(token, userId);
-                console.log(response.items)
-                console.log(response.items.images)
                 setUserPlaylist(response.items)
             } catch (error) {
                 console.error('Error fetching user Playlists:', error)
@@ -36,6 +34,7 @@ const Profile = ({ token, setToken, setPlaylist, userId }) => {
     const handleLogout = () => {
         Spotify.handleLogout(setToken);
         setPlaylist(true);
+        setPage('Playlist')
     };
 
     return (

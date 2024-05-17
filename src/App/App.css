@@ -60,3 +60,176 @@
     border-radius: 10px;
     padding: 20px 25px;
 }
+
+.box-4,
+.box-4-active,
+.box-5,
+.box-5-active,
+.box-6,
+.box-6-active,
+.box-7,
+.box-7-active {
+    display: none;
+}
+
+@media (max-width: 900px) {
+    .all-boxes {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+
+        grid-template-rows:  none;
+        grid-template-areas:
+        'one one one'
+        'four five six'
+        'seven seven seven';
+    }
+
+    .box-1 {
+        grid-area: one;
+        background-color: #1E1E1E;
+        margin: 20px 20px 10px;
+        border-radius: 10px;
+        padding: 20px 25px;
+    }
+
+    .box-2 {
+        display: none;
+    }
+
+    .box-3 {
+        display: none;
+    }
+
+    .box-4 {
+        grid-area: four;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #1E1E1E;
+        height: calc(100vh - 2 * 125px);
+        margin: 10px 10px 10px 20px;
+        border-radius: 10px;
+        padding: 20px 25px;
+        height: 40px;
+        font-size: 20px;
+        font-weight: 800;
+        cursor: pointer;
+    }
+
+    .box-4-active {
+        grid-area: four;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #1E1E1E;
+        height: calc(100vh - 2 * 125px);
+        margin: 10px 10px 10px 20px;
+        border-radius: 10px;
+        padding: 20px 25px;
+        height: 40px;
+        font-size: 20px;
+        font-weight: 800;
+        cursor: pointer;
+        color: #1E1E1E;
+        background-color: #fff;
+    }
+
+    .box-5 {
+        grid-area: five;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #1E1E1E;
+        margin: 10px ;
+        border-radius: 10px;
+        padding: 20px 25px;
+        font-size: 20px;
+        font-weight: 800;
+        cursor: pointer;
+    }
+
+    .box-5-active {
+        grid-area: five;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #1E1E1E;
+        margin: 10px ;
+        border-radius: 10px;
+        padding: 20px 25px;
+        font-size: 20px;
+        font-weight: 800;
+        cursor: pointer;
+        color: #1E1E1E;
+        background-color: #fff;
+    }
+    
+    .box-6 {
+        grid-area: six;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #1E1E1E;
+        margin: 10px 20px 10px 10px;
+        border-radius: 10px;
+        padding: 20px 25px;
+        font-size: 20px;
+        font-weight: 800;
+        cursor: pointer;
+    }
+
+    .box-6-active {
+        grid-area: six;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: calc(100vh - 2 * 125px);
+        margin: 10px 20px 10px 10px;
+        border-radius: 10px;
+        padding: 20px 25px;
+        height: 40px;
+        font-size: 20px;
+        font-weight: 800;
+        cursor: pointer;
+        color: #1E1E1E;
+        background-color: #fff;
+    }
+    
+    .box-7 {
+        grid-area: seven;
+        display: flex;
+        flex-direction: column;
+        background-color: #1E1E1E;
+        height: calc(100vh - 2 * 170px);
+        margin: 10px 20px 20px;
+        border-radius: 10px;
+        padding: 20px 25px;
+    }
+}
+
+@media (max-width: 450px) {
+
+    .top-logo h1 {
+        font-size: 35px;
+    }
+
+    .title {
+        font-size: 22px;
+    }
+
+    .box-4,
+    .box-4-active, 
+    .box-5, 
+    .box-5-active,
+    .box-6,
+    .box-6-active {
+        font-size: 16px;
+        height: 20px;
+        padding: 15px 5px;
+    }
+
+    .box-1,
+    .box-7 {
+        padding: 15px;
+    }
+}

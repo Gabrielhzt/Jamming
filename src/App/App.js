@@ -3,12 +3,17 @@ import './App.css';
 import Search from '../Search/Search';
 import Info from '../Info/Info';
 import Spotify from '../API/Spotify';
+import Playlist from '../Playlist/Playlist';
+import Profile from '../Profile/Profile';
 
 const App = () => {
   const [token, setToken] = useState(() => window.localStorage.getItem('token') || '');
   const [uris, setUris] = useState([]);
   const [takeid, setTakeId] = useState([]);
   const [userId, setUserId] = useState();
+  const [page, setPage] = useState('Playlist');
+  const [fetchedTracks, setFetchedTracks] = useState([]);
+  const [playlist, setPlaylist] = useState(true)
 
   useEffect(() => {
     if (!token && window.location.hash) {
@@ -44,6 +49,31 @@ const App = () => {
     fetchProfile();
   }, [token]);
 
+  useEffect(() => {
+    if (takeid.length !== 0) {
+        const fetchTracks = async () => {
+            try {
+                console.log('ho')
+                const allIds = fetchedTracks.map((e) => e.id)
+                if (allIds.includes(takeid)) {
+                    return;
+                }
+                const response = await Spotify.getTracksById(token, takeid);
+                setFetchedTracks(prev => [...prev, response]);
+                setTakeId([])
+            } catch (error) {
+                console.error('Error fetching track:', error);
+            }
+        };
+    
+        fetchTracks();
+    }
+}, [takeid]);
+
+  useEffect(() => {
+    console.log(takeid)
+  }, [takeid])
+
   return (
     <div className='all-boxes'>
       <div className='box-1'>
@@ -57,7 +87,25 @@ const App = () => {
         <Search token={token} setToken={setToken} setUris={setUris} setId={setTakeId} />
       </div>
       <div className='box-3'>
-        <Info token={token} setToken={setToken} takeId={takeid} setTakeId={setTakeId} uris={uris} setUris={setUris} userId={userId} setUserId={setUserId} />
+        <Info token={token} setToken={setToken} takeId={takeid} setTakeId={setTakeId} uris={uris} setUris={setUris} userId={userId} setUserId={setUserId} fetchedTracks={fetchedTracks} setFetchedTracks={setFetchedTracks} playlist={playlist} setPlaylist={setPlaylist} />
+      </div>
+      <div className={page === 'Playlist' ? 'box-4-active' : 'box-4'} onClick={() => setPage('Playlist')}>
+        <p>Playlist</p>
+      </div>
+      <div className={page === 'Search' ? 'box-5-active' : 'box-5'} onClick={() => setPage('Search')}>
+        <p>Search</p>
+      </div>
+      <div className={page === 'Profile' ? 'box-6-active' : 'box-6'} onClick={() => setPage('Profile')}>
+        <p>Profile</p>
+      </div>
+      <div className='box-7'>
+        {page === 'Playlist' ? (
+          <Playlist token={token} setToken={setToken} takeId={takeid} setTakeId={setTakeId} uris={uris} setUris={setUris} userId={userId} fetchedTracks={fetchedTracks} setFetchedTracks={setFetchedTracks} />
+        ) : page === 'Search' ? (
+          <Search token={token} setToken={setToken} setUris={setUris} setId={setTakeId} />
+        ) : page === 'Profile' ? (
+          <Profile token={token} setToken={setToken} userId={userId} playlist={playlist} setPlaylist={setPlaylist} setPage={setPage} />
+        ) : null}
       </div>
     </div>
   )

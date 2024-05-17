@@ -61,3 +61,54 @@
     font-size: 13px;
     cursor: pointer;
 }
+
+@media (max-width: 1425px) {
+
+    .profile-info h1 {
+        font-size: 30px;
+    }
+    
+    .profile-info p {
+        font-size: 11px;
+    }
+
+    .all-playlist h2 {
+        font-size: 22px;
+        margin-bottom: 30px;
+    }
+
+    .align {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+    
+    .flex {
+        display: flex;
+        gap: 15px;
+        width: 230px;
+    }
+    
+    .little-img {
+        width: 90px;
+        border-radius: 5px;
+    }
+
+    .text-playlist h3 {
+        font-size: 18px;
+    }
+    
+    .little-btn {
+        padding: 4px 12px;
+        font-size: 11px;
+    }
+    
+}
+
+@media (max-width: 900px) {
+    
+    .align {
+        max-height: calc(100vh - 2 * 275px);
+        overflow-y: scroll;
+    }
+}

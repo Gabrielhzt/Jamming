@@ -44,7 +44,10 @@ const Search = ({ token, setToken, setUris, setId }) => {
                             <div className="song-info">
                                 <img src={track.album.images[0].url} alt={track.name} className="img" />
                                 <div className="text-song">
-                                    <h3>{track.name}</h3>
+                                <h3>
+                                    {track.name.slice(0, 16)}
+                                    {track.name.length >= 15 ? '...' : ''}
+                                </h3>
                                     <p>{track.artists[0].name}</p>
                                 </div>
                             </div>

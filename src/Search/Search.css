@@ -80,3 +80,13 @@
     padding: 10px 10px 9px;
     cursor: pointer;
 }
+
+@media (max-width: 900px) {
+
+    .search-box {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+        max-height: calc(100vh - 2 * 170px);
+    }
+}
