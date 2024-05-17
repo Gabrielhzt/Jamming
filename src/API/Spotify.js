@@ -108,7 +108,7 @@ const Spotify = {
         }
       );
       try {
-        const tracks = await axios.post(
+        await axios.post(
           `https://api.spotify.com/v1/playlists/${response.data.id}/tracks`,
           {
             uris: uris
