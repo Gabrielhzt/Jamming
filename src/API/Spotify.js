@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const CLIENT_ID = '54c2998cdeae46688776d1825cf77fc8';
-const REDIRECT_URI = 'http://localhost:3000/';
+const REDIRECT_URI = 'https://jammming-webapp.netlify.app';
 const AUTH_ENDPOINT = 'https://accounts.spotify.com/authorize';
 const RESPONSE_TYPE = 'token';
 
