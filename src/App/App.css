@@ -244,6 +244,28 @@
 
     .box-1,
     .box-7 {
-        padding: 15px;
+        padding: 20px;
+    }
+
+
+    .box-1 {
+        margin: 10px;
+    }
+
+    .box-4,
+    .box-4-active,
+    .box-5,
+    .box-5-active,
+    .box-6,
+    .box-6-active,
+    .box-7,
+    .box-7-active {
+        margin: 10px;
+        margin-bottom: 5px;
+        margin-top: 5px;
+    }
+
+    .box-8 {
+        margin: 10px;
     }
 }
